@@ -10,5 +10,7 @@ project(${PROJECT_NAME})
 # Executable
 add_executable(
   lmgr
-  src/Main.c
+  ${CMAKE_SOURCE_DIR}/src/Main.c
+  ${CMAKE_SOURCE_DIR}/src/Todo.c
 )
+target_include_directories(lmgr PUBLIC ${CMAKE_SOURCE_DIR}/include)

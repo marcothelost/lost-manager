@@ -3,13 +3,14 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "Todo.h"
+
 const char         INPUT_SYMBOL     = '$';
 const int          STRINGS_MATCHING = 0;
-const unsigned int BUFFER_SIZE      = 128;
+const unsigned int BUFFER_SIZE      = 128u;
 
 void clearScreen();
-void foo();
-void bar();
+void printTodos();
 
 int main()
 {
@@ -29,13 +30,9 @@ int main()
       continue;
     }
 
-    if (strcmp(buffer, "foo") == STRINGS_MATCHING)
+    if (strcmp(buffer, "todos") == STRINGS_MATCHING)
     {
-      foo();
-    }
-    else if (strcmp(buffer, "bar") == STRINGS_MATCHING)
-    {
-      bar();
+      printTodos();
     }
     else if (strcmp(buffer, "clear") == STRINGS_MATCHING)
     {
@@ -51,6 +48,15 @@ int main()
   return EXIT_SUCCESS;
 }
 
-void clearScreen() { printf("\e[1;1H\e[2J"); }
-void foo() { printf("Foo!\n"); }
-void bar() { printf("Bar!\n"); }
+void clearScreen() {
+  printf("\e[1;1H\e[2J");
+}
+
+void printTodos() {
+  Todo* currentTodo = loadTodos();
+  while (currentTodo != NULL)
+  {
+    printf("%s (%s)\n", currentTodo->text, currentTodo->completed ? "Done" : "Undone");
+    currentTodo = currentTodo->next;
+  }
+}
